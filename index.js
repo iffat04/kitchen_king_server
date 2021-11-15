@@ -21,7 +21,9 @@ async function run() {
 
     const database = client.db("kitchenKing");
     const productCollection = database.collection("productCollection");
-    const orderCollection = database.collection("orderCollection")
+    const orderCollection = database.collection("orderCollection");
+    const reviewCollection = database.collection("reviewCollection");
+    
     // insert product using POST method
     app.post('/products',async (req,res)=>{
         const product = req.body;
@@ -47,14 +49,44 @@ async function run() {
       res.send(order);
       console.log('get success')
   })
+  //delete order
+  app.delete('/order/:id', async (req,res)=>{
+    const id= req.params.id; 
+    console.log(id);
+    const query = {_id : ObjectId(id)};
+    const result = await orderCollection.deleteOne(query);
+    console.log('delete hit')
+    res.send(result)
+    console.log(result)
+    })
 
-    //Get api for products
+    //review//////////////////////
+    //get review
+
+    //post review
+    app.post('/review', async (req,res)=>{
+      console.log(req.body);
+      const review = req.body;
+      const result = await reviewCollection.insertOne(review)
+      console.log(result);
+      res.send(result);
+  })
+
+    //Get api for top products
     app.get('/products/topitem', async (req,res)=>{
         console.log('hitted')
         const cursor = productCollection.find({})
         const products = await cursor.limit(6).toArray();
         res.send(products)
     })
+      //Get api for all products
+      app.get('/products', async (req,res)=>{
+        console.log('hitted')
+        const cursor = productCollection.find({})
+        const products = await cursor.toArray();
+        res.send(products)
+      })
+
     //get single product
     app.get('/purchase/:id', async (req,res)=>{
       const id = req.params.id;
