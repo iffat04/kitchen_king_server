@@ -6,7 +6,7 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 const { MongoClient } = require('mongodb');
-
+const ObjectId = require('mongodb').ObjectId;
 app.get('/',(req,res)=>{
     res.send('connected');
 })
@@ -21,6 +21,7 @@ async function run() {
 
     const database = client.db("kitchenKing");
     const productCollection = database.collection("productCollection");
+    const orderCollection = database.collection("orderCollection")
     // insert product using POST method
     app.post('/products',async (req,res)=>{
         const product = req.body;
@@ -30,6 +31,22 @@ async function run() {
         res.send(result)
     
     })
+    //post 
+    ///post for order 
+    app.post('/order', async (req,res)=>{
+      console.log(req.body);
+      const order = req.body;
+      const result = await orderCollection.insertOne(order)
+      console.log(result);
+      res.send(result);
+  })
+    ///get all orders
+    app.get('/order',async(req,res)=>{
+      const cursor = orderCollection.find({});
+      const order = await cursor.toArray();
+      res.send(order);
+      console.log('get success')
+  })
 
     //Get api for products
     app.get('/products/topitem', async (req,res)=>{
@@ -38,6 +55,15 @@ async function run() {
         const products = await cursor.limit(6).toArray();
         res.send(products)
     })
+    //get single product
+    app.get('/purchase/:id', async (req,res)=>{
+      const id = req.params.id;
+      console.log(id)
+      const query = {_id : ObjectId(id)};
+      const product = await productCollection.findOne(query);
+      res.json(product);
+     })
+
     
     //const result = await haiku.insertOne(doc);
 
