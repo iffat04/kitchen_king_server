@@ -23,6 +23,7 @@ async function run() {
     const productCollection = database.collection("productCollection");
     const orderCollection = database.collection("orderCollection");
     const reviewCollection = database.collection("reviewCollection");
+    const userCollection = database.collection("userCollection");
     
     // insert product using POST method
     app.post('/products',async (req,res)=>{
@@ -49,8 +50,8 @@ async function run() {
       res.send(order);
       console.log('get success')
   })
-  //delete order
-  app.delete('/order/:id', async (req,res)=>{
+  //delete an order
+  app.delete('/order/delete/:id', async (req,res)=>{
     const id= req.params.id; 
     console.log(id);
     const query = {_id : ObjectId(id)};
@@ -59,9 +60,42 @@ async function run() {
     res.send(result)
     console.log(result)
     })
+    /////update an order status approve
+     app.put('/order/approve/:id', async (req,res)=>{
+       const id = req.params.id ;
+       const updatedOrder = req.body;
+       console.log(updatedOrder);
+       const filter = {_id : ObjectId(id)}
+       const options ={upsert : true};
+       const updateDoc ={
+         $set:{
+           status : updatedOrder.status
+         }
+       };
+       const result = await orderCollection.updateOne(filter, updateDoc, options);
+       console.log(result);
+       res.send(result);
+     })
+
+    //get api for specific users order
+    app.get('/myorder/:id', async (req,res)=>{
+      const id = req.params.id ;
+      console.log(id);
+      const query= {email : id}
+      const result = await orderCollection.find(query).toArray();
+      //console.log(result)
+      res.send(result)
+    })
+
 
     //review//////////////////////
     //get review
+    app.get('/reviews',async (req,res)=>{
+      const cursor = reviewCollection.find({});
+      const reviews = await cursor.toArray();
+      res.send(reviews);
+      console.log('get success')
+  })
 
     //post review
     app.post('/review', async (req,res)=>{
@@ -71,6 +105,8 @@ async function run() {
       console.log(result);
       res.send(result);
   })
+
+  
 
     //Get api for top products
     app.get('/products/topitem', async (req,res)=>{
@@ -95,6 +131,60 @@ async function run() {
       const product = await productCollection.findOne(query);
       res.json(product);
      })
+     //////////////////////////user section
+     //new user
+     app.post('/users', async (req,res)=>{
+       const user = req.body;
+       console.log(user)
+       const result= await userCollection.insertOne(user);
+       console.log(result);
+       res.json(result);
+     })
+
+     app.put('/users', async (req,res)=>{
+       const user = req.body;
+       console.log(user)
+       const filter = {email: user.email};
+       const options={upsert:true};
+       const updateDoc = {
+         $set:user
+       };
+
+       const result= await userCollection.updateOne(filter,updateDoc,options);
+       console.log(result);
+       res.json(result)
+     });
+
+
+     //make admin
+     app.put('/makeAdmin', async (req,res)=>{
+       const user= req.body;
+
+       const filter = {email:user.email};
+       const updateDoc = {
+         $set : {
+           role:'admin'
+         }
+       }
+       const result = await userCollection.updateOne(filter, updateDoc);
+       console.log(result)
+       res.json(result)
+
+     })
+     //verify user 
+     app.get('/users/verify/:email', async(req,res)=>{
+       const email = req.params.email;
+       const query = {email: email }
+       const user = await userCollection.findOne(query);
+       let isAdmin = false;
+        if(user?.role === 'admin'){
+          isAdmin = true;
+        }
+        res.json({admin: isAdmin});
+     })
+
+
+     
 
     
     //const result = await haiku.insertOne(doc);
