@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "kitchenking-website",
+  "private_key_id": "31400ca2026a039e8213061f2eba0e1a2146576f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDynqYLU7LwRNH1\nRnmu4MiXQLZ9sp+TjBTsTO7e/bkWsi9YrhTVUzDW9WDcOJmBFI7H5Qw56y+T4Ebe\n0WiPPBGyxWfp1j9njF2GQ7kNF/64xCngcDVtublMUtXxYOPLCavbcJnjAwU7I0Qd\nRL6qy3711vjqWjaM7+BFoK6Mq/NJDGf8ZGmxMeGEHSvdnCgUbvjvmhQtMgfhfAV3\npg9EdxHeZk0zE5vNIgSSgQtEc2kc+F0Pt48LpS0olO6kqF5FyWXCCh1vHWFLhc5g\nHyz42jf/8ElhImZMBSqIE7M2vIJ3onwhisNEx2CptWqKsS/yys8gTsTRsdmn7czT\nlu1hBV0lAgMBAAECggEADk8DIcEMg8/kkQ0DEVL89DH9wUExrkDmnVQL32ytHTSi\nMbOck23eABjFybRwgH9u90TfznemHULEHeZ8PpGkmpDlXWdZuG3mYyF8g6mXXRwR\nOy/ARZRx5EQwuBUGgjDeaOlFuMYdaXIy6sX6jQtGKtIEPpqrmRlu4N8GhFHXczE8\neEo66jpN03A1xQoOrGgaDZz2ZxGT3rqkqaCppveIlFWg05I+16iZJuSKJY16eiua\nLPMvbwn5QfxAmf5wVX9ZJnljtyXul8mMrcqD2WWHPBMBZhrnSpNgznEllpyq+ImB\nIImi5KPGpuwY5G1dRWjcup+t0nn3sJUexBsQch5FeQKBgQD5o/cTeLltyN63JE1Q\nmmwdDW6uDm/rQ/7CBOxe/SFwke54dbI0lbAI1RFRLjwuyLr9muX6roiRy0ZPxug5\nkOwXvuAK8YuZVL23/CgC/qg1eExvX0bT6w5lyTKwQm3PkHWx8OLqNnHgvYjMGOOH\nemHld3N3qK60z1W92V4T/l3HmQKBgQD4zOW8loqbkPCsIlmbcYECgXjrVM0ONJ4u\n9VhKHA9yUH01F26RQQJK0B5ItzNEtPghQOwoezL8QauYqZxVTe4lX3yFYcewz8yI\nbEPXtwrL0bwHXsfTCRwfDRJBKJULf+EOkBesCvB3zSCMjHe2Opf2e3nTN/ZEV7Fu\nPuEc/4sJbQKBgCgB7gvx0g3VHlRNfhKH3QG+8Fj2uVsD96UScus6OAy5ZnVpr1ic\nEK0psG/JMB3zT3xrQaYuKHbtE+SfJQJsxll73p4CXfQBz7HXuHXaaAzBrcY/h7NY\nvWL0nqn+y2hzZ1lQGJ2eghuZZH4JExXYOC41OY0YvH7/p2cYmeosXs0pAoGABKCz\nCT33mAsrHtiIuCZ1UtmbqSzrn38FDjSMDtzUwLiUi59C9Dq0UzXpykp2DqobD2tI\nuTwJZ73E9lL5UHDhpBpRk52M/FHxKPxyipmh/saI684sg1VhC4bPtxyNISigxAeU\nGSQe8uuC1npqY55VY0VKr84Tq5PB/h33S/XI3UUCgYBjqlbRtXaUkHX86jgQr2zc\nj/sXjYJk7GU0Ww2CMaM6UXOFHSMf9medVK4hAcwguSzxbMrI6/8tCbMUpe6W+oP2\nlc3BBM2DP8CxQglR72gMzOokmm2KQ89BgSKtykF1lRIIPyebmE2jTjlDIhvcN89I\npljPKFGCk7N+Eb6IvBIspQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-3qi2i@kitchenking-website.iam.gserviceaccount.com",
+  "client_id": "110741597817512101074",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-3qi2i%40kitchenking-website.iam.gserviceaccount.com"
+}

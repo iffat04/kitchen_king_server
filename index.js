@@ -4,9 +4,25 @@ const port = process.env.PORT || 5000 ;
 require('dotenv').config();
 const cors = require('cors');
 app.use(cors());
+const admin = require("firebase-admin");
 app.use(express.json());
 const { MongoClient } = require('mongodb');
 const ObjectId = require('mongodb').ObjectId;
+
+//admin
+
+
+var serviceAccount = require("./privateKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+  //databaseURL: "https://kitchenking-website-default-rtdb.firebaseio.com"
+});
+
+
+
+
+
 app.get('/',(req,res)=>{
     res.send('connected');
 })
@@ -14,6 +30,22 @@ app.get('/',(req,res)=>{
 //database connection
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.luxos.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+
+async function verifyToken(req, res, next){
+  if(req.headers?.authorization?.startsWith('Bearer')){
+    const token = req.headers.authorization.split(' ')[1];
+    
+    try{
+      const decodedUser = await admin.auth().verifyIdToken(token);
+      req.decodedEmail = decodedUser.email;
+    }
+    catch{
+
+    }
+  }
+  next();
+}
 
 async function run() {
   try {
@@ -157,18 +189,29 @@ async function run() {
 
 
      //make admin
-     app.put('/makeAdmin', async (req,res)=>{
+     app.put('/makeAdmin',verifyToken , async (req,res)=>{
        const user= req.body;
+       //console.log(req.headers.authorization.split(' ')[1]);  
+       console.log('decoded:',req.decodedEmail)
 
-       const filter = {email:user.email};
-       const updateDoc = {
-         $set : {
-           role:'admin'
+       const requesterEmail = req.decodedEmail;
+       if(requesterEmail){
+         const requesterAccout = await userCollection.findOne({email:requesterEmail})
+         if(requesterAccout.role === 'admin'){
+          const filter = {email:user.email};
+          const updateDoc = {
+            $set : {
+              role:'admin'
+            }
+          }
+          const result = await userCollection.updateOne(filter, updateDoc);
+          console.log(result)
+          res.json(result)
          }
        }
-       const result = await userCollection.updateOne(filter, updateDoc);
-       console.log(result)
-       res.json(result)
+       res.status(403).json({message:'You do not have access'})
+
+       
 
      })
      //verify user 
